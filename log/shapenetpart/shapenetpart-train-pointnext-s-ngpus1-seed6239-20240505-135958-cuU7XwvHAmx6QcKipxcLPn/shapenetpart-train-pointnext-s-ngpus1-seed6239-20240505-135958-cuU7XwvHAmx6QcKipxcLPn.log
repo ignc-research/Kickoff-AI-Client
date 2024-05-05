@@ -1,0 +1,518 @@
+[05/05 13:59:58] ShapeNetPartNormal INFO: dist_url: tcp://localhost:8888
+dist_backend: nccl
+multiprocessing_distributed: False
+ngpus_per_node: 1
+world_size: 1
+launcher: mp
+local_rank: 0
+use_gpu: True
+seed: 6239
+epoch: 0
+epochs: 10
+ignore_index: None
+val_fn: validate
+deterministic: False
+sync_bn: False
+criterion_args:
+  NAME: Poly1FocalLoss
+use_mask: False
+grad_norm_clip: 1
+layer_decay: 0
+step_per_update: 1
+start_epoch: 1
+sched_on_epoch: True
+wandb:
+  use_wandb: False
+  project: PointNext-ShapeNetPart
+use_amp: False
+use_voting: False
+val_freq: 1
+resume: False
+test: False
+finetune: False
+mode: train
+logname: None
+load_path: None
+print_freq: 10
+save_freq: -1
+root_dir: log/shapenetpart
+pretrained_path: None
+datatransforms:
+  train: ['PointsToTensor', 'PointCloudScaling', 'PointCloudCenterAndNormalize', 'PointCloudJitter', 'ChromaticDropGPU']
+  val: ['PointsToTensor', 'PointCloudCenterAndNormalize']
+  vote: ['PointCloudScaling']
+  kwargs:
+    jitter_sigma: 0.001
+    jitter_clip: 0.005
+    scale: [0.8, 1.2]
+    gravity_dim: 1
+    angle: [0, 1.0, 0]
+feature_keys: pos,x,heights
+dataset:
+  common:
+    NAME: ShapeNetPartNormal
+    data_root: data/ShapeNetPart/shapenetcore_partanno_segmentation_benchmark_v0_normal
+    use_normal: True
+    num_points: 2048
+  train:
+    split: trainval
+  val:
+    split: test
+    presample: True
+num_classes: 50
+shape_classes: 16
+num_points: 2048
+normal_channel: True
+batch_size: 8
+dataloader:
+  num_workers: 6
+num_votes: 10
+refine: True
+lr: 0.001
+min_lr: None
+optimizer:
+  NAME: adamw
+  weight_decay: 0.0001
+sched: multistep
+decay_epochs: [210, 270]
+decay_rate: 0.1
+warmup_epochs: 0
+model:
+  NAME: BasePartSeg
+  encoder_args:
+    NAME: PointNextEncoder
+    blocks: [1, 1, 1, 1, 1]
+    strides: [1, 2, 2, 2, 2]
+    width: 32
+    in_channels: 7
+    sa_layers: 3
+    sa_use_res: True
+    radius: 0.1
+    radius_scaling: 2.5
+    nsample: 32
+    expansion: 4
+    aggr_args:
+      feature_type: dp_fj
+    reduction: max
+    group_args:
+      NAME: ballquery
+      normalize_dp: True
+    conv_args:
+      order: conv-norm-act
+    act_args:
+      act: relu
+    norm_args:
+      norm: bn
+  decoder_args:
+    NAME: PointNextPartDecoder
+    cls_map: curvenet
+  cls_args:
+    NAME: SegHead
+    global_feat: max,avg
+    num_classes: 50
+    in_channels: None
+    norm_args:
+      norm: bn
+rank: 0
+distributed: False
+mp: False
+task_name: shapenetpart
+cfg_basename: pointnext-s
+is_training: True
+run_name: shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn
+run_dir: log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn
+exp_dir: log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn
+log_dir: log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn
+ckpt_dir: log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn/checkpoint
+log_path: log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn.log
+cfg_path: log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn/cfg.yaml
+[05/05 13:59:59] ShapeNetPartNormal INFO: split: test, median npoints 2048.0, avg num points 2048.0, std 0.0
+[05/05 13:59:59] ShapeNetPartNormal INFO: length of validation dataset: 16
+[05/05 13:59:59] ShapeNetPartNormal INFO: number of classes of the dataset: None
+[05/05 13:59:59] ShapeNetPartNormal INFO: radius: [[0.1], [0.1], [0.25], [0.625], [1.5625]],
+ nsample: [[32], [32], [32], [32], [32]]
+[05/05 13:59:59] ShapeNetPartNormal INFO: NAME: ballquery
+normalize_dp: True
+radius: 0.1
+nsample: 32
+[05/05 13:59:59] ShapeNetPartNormal INFO: NAME: ballquery
+normalize_dp: True
+radius: 0.25
+nsample: 32
+[05/05 13:59:59] ShapeNetPartNormal INFO: NAME: ballquery
+normalize_dp: True
+radius: 0.625
+nsample: 32
+[05/05 13:59:59] ShapeNetPartNormal INFO: NAME: ballquery
+normalize_dp: True
+radius: 1.5625
+nsample: 32
+[05/05 13:59:59] ShapeNetPartNormal INFO: BasePartSeg(
+  (encoder): PointNextEncoder(
+    (encoder): Sequential(
+      (0): Sequential(
+        (0): SetAbstraction(
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv1d(7, 32, kernel_size=(1,), stride=(1,))
+            )
+          )
+        )
+      )
+      (1): Sequential(
+        (0): SetAbstraction(
+          (skipconv): Sequential(
+            (0): Conv1d(32, 64, kernel_size=(1,), stride=(1,))
+          )
+          (act): ReLU(inplace=True)
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv2d(35, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv2d(32, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (grouper): QueryAndGroup()
+        )
+      )
+      (2): Sequential(
+        (0): SetAbstraction(
+          (skipconv): Sequential(
+            (0): Conv1d(64, 128, kernel_size=(1,), stride=(1,))
+          )
+          (act): ReLU(inplace=True)
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv2d(67, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (grouper): QueryAndGroup()
+        )
+      )
+      (3): Sequential(
+        (0): SetAbstraction(
+          (skipconv): Sequential(
+            (0): Conv1d(128, 256, kernel_size=(1,), stride=(1,))
+          )
+          (act): ReLU(inplace=True)
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv2d(131, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (grouper): QueryAndGroup()
+        )
+      )
+      (4): Sequential(
+        (0): SetAbstraction(
+          (skipconv): Sequential(
+            (0): Conv1d(256, 512, kernel_size=(1,), stride=(1,))
+          )
+          (act): ReLU(inplace=True)
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv2d(259, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (grouper): QueryAndGroup()
+        )
+      )
+    )
+  )
+  (decoder): PointNextPartDecoder(
+    (global_conv2): Sequential(
+      (0): Sequential(
+        (0): Conv1d(512, 128, kernel_size=(1,), stride=(1,))
+        (1): ReLU(inplace=True)
+      )
+    )
+    (global_conv1): Sequential(
+      (0): Sequential(
+        (0): Conv1d(256, 64, kernel_size=(1,), stride=(1,))
+        (1): ReLU(inplace=True)
+      )
+    )
+    (decoder): Sequential(
+      (0): Sequential(
+        (0): FeaturePropogation(
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv1d(304, 32, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv1d(32, 32, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (1): Sequential(
+        (0): FeaturePropogation(
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv1d(192, 64, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv1d(64, 64, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (2): Sequential(
+        (0): FeaturePropogation(
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv1d(384, 128, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv1d(128, 128, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (3): Sequential(
+        (0): FeaturePropogation(
+          (convs): Sequential(
+            (0): Sequential(
+              (0): Conv1d(768, 256, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+            (1): Sequential(
+              (0): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+              (1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+    )
+  )
+  (head): SegHead(
+    (head): Sequential(
+      (0): Sequential(
+        (0): Conv1d(96, 96, kernel_size=(1,), stride=(1,), bias=False)
+        (1): BatchNorm1d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (1): Dropout(p=0.5, inplace=False)
+      (2): Sequential(
+        (0): Conv1d(96, 50, kernel_size=(1,), stride=(1,))
+      )
+    )
+  )
+)
+[05/05 13:59:59] ShapeNetPartNormal INFO: Number of params: 0.9818 M
+[05/05 13:59:59] ShapeNetPartNormal INFO: Param groups = {
+  "decay": {
+    "weight_decay": 0.0001,
+    "params": [
+      "encoder.encoder.0.0.convs.0.0.weight",
+      "encoder.encoder.1.0.skipconv.0.weight",
+      "encoder.encoder.1.0.convs.0.0.weight",
+      "encoder.encoder.1.0.convs.1.0.weight",
+      "encoder.encoder.1.0.convs.2.0.weight",
+      "encoder.encoder.2.0.skipconv.0.weight",
+      "encoder.encoder.2.0.convs.0.0.weight",
+      "encoder.encoder.2.0.convs.1.0.weight",
+      "encoder.encoder.2.0.convs.2.0.weight",
+      "encoder.encoder.3.0.skipconv.0.weight",
+      "encoder.encoder.3.0.convs.0.0.weight",
+      "encoder.encoder.3.0.convs.1.0.weight",
+      "encoder.encoder.3.0.convs.2.0.weight",
+      "encoder.encoder.4.0.skipconv.0.weight",
+      "encoder.encoder.4.0.convs.0.0.weight",
+      "encoder.encoder.4.0.convs.1.0.weight",
+      "encoder.encoder.4.0.convs.2.0.weight",
+      "decoder.global_conv2.0.0.weight",
+      "decoder.global_conv1.0.0.weight",
+      "decoder.decoder.0.0.convs.0.0.weight",
+      "decoder.decoder.0.0.convs.1.0.weight",
+      "decoder.decoder.1.0.convs.0.0.weight",
+      "decoder.decoder.1.0.convs.1.0.weight",
+      "decoder.decoder.2.0.convs.0.0.weight",
+      "decoder.decoder.2.0.convs.1.0.weight",
+      "decoder.decoder.3.0.convs.0.0.weight",
+      "decoder.decoder.3.0.convs.1.0.weight",
+      "head.head.0.0.weight",
+      "head.head.2.0.weight"
+    ],
+    "lr_scale": 1.0
+  },
+  "no_decay": {
+    "weight_decay": 0.0,
+    "params": [
+      "encoder.encoder.0.0.convs.0.0.bias",
+      "encoder.encoder.1.0.skipconv.0.bias",
+      "encoder.encoder.1.0.convs.0.1.weight",
+      "encoder.encoder.1.0.convs.0.1.bias",
+      "encoder.encoder.1.0.convs.1.1.weight",
+      "encoder.encoder.1.0.convs.1.1.bias",
+      "encoder.encoder.1.0.convs.2.1.weight",
+      "encoder.encoder.1.0.convs.2.1.bias",
+      "encoder.encoder.2.0.skipconv.0.bias",
+      "encoder.encoder.2.0.convs.0.1.weight",
+      "encoder.encoder.2.0.convs.0.1.bias",
+      "encoder.encoder.2.0.convs.1.1.weight",
+      "encoder.encoder.2.0.convs.1.1.bias",
+      "encoder.encoder.2.0.convs.2.1.weight",
+      "encoder.encoder.2.0.convs.2.1.bias",
+      "encoder.encoder.3.0.skipconv.0.bias",
+      "encoder.encoder.3.0.convs.0.1.weight",
+      "encoder.encoder.3.0.convs.0.1.bias",
+      "encoder.encoder.3.0.convs.1.1.weight",
+      "encoder.encoder.3.0.convs.1.1.bias",
+      "encoder.encoder.3.0.convs.2.1.weight",
+      "encoder.encoder.3.0.convs.2.1.bias",
+      "encoder.encoder.4.0.skipconv.0.bias",
+      "encoder.encoder.4.0.convs.0.1.weight",
+      "encoder.encoder.4.0.convs.0.1.bias",
+      "encoder.encoder.4.0.convs.1.1.weight",
+      "encoder.encoder.4.0.convs.1.1.bias",
+      "encoder.encoder.4.0.convs.2.1.weight",
+      "encoder.encoder.4.0.convs.2.1.bias",
+      "decoder.global_conv2.0.0.bias",
+      "decoder.global_conv1.0.0.bias",
+      "decoder.decoder.0.0.convs.0.1.weight",
+      "decoder.decoder.0.0.convs.0.1.bias",
+      "decoder.decoder.0.0.convs.1.1.weight",
+      "decoder.decoder.0.0.convs.1.1.bias",
+      "decoder.decoder.1.0.convs.0.1.weight",
+      "decoder.decoder.1.0.convs.0.1.bias",
+      "decoder.decoder.1.0.convs.1.1.weight",
+      "decoder.decoder.1.0.convs.1.1.bias",
+      "decoder.decoder.2.0.convs.0.1.weight",
+      "decoder.decoder.2.0.convs.0.1.bias",
+      "decoder.decoder.2.0.convs.1.1.weight",
+      "decoder.decoder.2.0.convs.1.1.bias",
+      "decoder.decoder.3.0.convs.0.1.weight",
+      "decoder.decoder.3.0.convs.0.1.bias",
+      "decoder.decoder.3.0.convs.1.1.weight",
+      "decoder.decoder.3.0.convs.1.1.bias",
+      "head.head.0.1.weight",
+      "head.head.0.1.bias",
+      "head.head.2.0.bias"
+    ],
+    "lr_scale": 1.0
+  }
+}
+[05/05 13:59:59] ShapeNetPartNormal INFO: Training from scratch
+[05/05 13:59:59] ShapeNetPartNormal INFO: length of training dataset: 16
+[05/05 14:00:01] ShapeNetPartNormal INFO: Test Epoch [1/10],Instance mIoU 41.09, Class mIoU 2.57, 
+ Class mIoUs tensor([ 0.0000, 41.0934,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:01] ShapeNetPartNormal INFO: Find a better ckpt @E1, val_ins_miou 41.09 val_cls_miou 2.57, 
+cls_mious: tensor([ 0.0000, 41.0934,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:01] ShapeNetPartNormal INFO: Found the best model and saved in log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn/checkpoint/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn_ckpt_best.pth
+[05/05 14:00:02] ShapeNetPartNormal INFO: Test Epoch [2/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:02] ShapeNetPartNormal INFO: Find a better ckpt @E2, val_ins_miou 82.79 val_cls_miou 5.17, 
+cls_mious: tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:02] ShapeNetPartNormal INFO: Found the best model and saved in log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn/checkpoint/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn_ckpt_best.pth
+[05/05 14:00:02] ShapeNetPartNormal INFO: Test Epoch [3/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:03] ShapeNetPartNormal INFO: Test Epoch [4/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:04] ShapeNetPartNormal INFO: Test Epoch [5/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:05] ShapeNetPartNormal INFO: Test Epoch [6/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:05] ShapeNetPartNormal INFO: Test Epoch [7/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:06] ShapeNetPartNormal INFO: Test Epoch [8/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:07] ShapeNetPartNormal INFO: Test Epoch [9/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:08] ShapeNetPartNormal INFO: Test Epoch [10/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:08] ShapeNetPartNormal INFO: Best Epoch 2,Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:08] ShapeNetPartNormal INFO: Successful Loading the ckpt from log/shapenetpart/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn/checkpoint/shapenetpart-train-pointnext-s-ngpus1-seed6239-20240505-135958-cuU7XwvHAmx6QcKipxcLPn_ckpt_best.pth
+[05/05 14:00:08] ShapeNetPartNormal INFO: ckpts @ 2 epoch( {} )
+[05/05 14:00:09] ShapeNetPartNormal INFO: Test Epoch [10/10],Instance mIoU 82.79, Class mIoU 5.17, 
+ Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')
+[05/05 14:00:09] ShapeNetPartNormal INFO: ---Voting---
+Best Epoch 2,Voting Instance mIoU 82.79, Voting Class mIoU 5.17, 
+ Voting Class mIoUs tensor([ 0.0000, 82.7896,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
+         0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+       device='cuda:0')

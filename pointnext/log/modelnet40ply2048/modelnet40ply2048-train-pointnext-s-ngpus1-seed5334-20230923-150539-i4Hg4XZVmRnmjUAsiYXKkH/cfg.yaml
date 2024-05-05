@@ -1,0 +1,120 @@
+!!python/object/new:openpoints.utils.config.EasyConfig
+dictitems:
+  ckpt_dir: log/modelnet40ply2048/modelnet40ply2048-train-pointnext-s-ngpus1-seed5334-20230923-150539-i4Hg4XZVmRnmjUAsiYXKkH/checkpoint
+  criterion_args: !!python/object/new:openpoints.utils.config.EasyConfig
+    dictitems:
+      NAME: CrossEntropy
+  datatransforms: !!python/object/new:openpoints.utils.config.EasyConfig
+    dictitems:
+      train: null
+      val: null
+  deterministic: false
+  dist_backend: nccl
+  dist_url: tcp://localhost:8888
+  distributed: false
+  epoch: 0
+  epochs: 100
+  exp_dir: log/modelnet40ply2048/modelnet40ply2048-train-pointnext-s-ngpus1-seed5334-20230923-150539-i4Hg4XZVmRnmjUAsiYXKkH
+  exp_name: pointnext-s
+  feature_keys: pos
+  finetune: false
+  grad_norm_clip: null
+  ignore_index: null
+  launcher: mp
+  layer_decay: 0
+  load_path: null
+  local_rank: 0
+  log_dir: log/modelnet40ply2048/modelnet40ply2048-train-pointnext-s-ngpus1-seed5334-20230923-150539-i4Hg4XZVmRnmjUAsiYXKkH
+  log_path: log/modelnet40ply2048/modelnet40ply2048-train-pointnext-s-ngpus1-seed5334-20230923-150539-i4Hg4XZVmRnmjUAsiYXKkH/modelnet40ply2048-train-pointnext-s-ngpus1-seed5334-20230923-150539-i4Hg4XZVmRnmjUAsiYXKkH.log
+  logname: null
+  mode: train
+  model: !!python/object/new:openpoints.utils.config.EasyConfig
+    dictitems:
+      NAME: BaseCls
+      cls_args: !!python/object/new:openpoints.utils.config.EasyConfig
+        dictitems:
+          NAME: ClsHead
+          mlps:
+          - 512
+          - 256
+          norm_args: !!python/object/new:openpoints.utils.config.EasyConfig
+            dictitems:
+              norm: bn1d
+          num_classes: 40
+      encoder_args: !!python/object/new:openpoints.utils.config.EasyConfig
+        dictitems:
+          NAME: PointNextEncoder
+          act_args: !!python/object/new:openpoints.utils.config.EasyConfig
+            dictitems:
+              act: relu
+          aggr_args: !!python/object/new:openpoints.utils.config.EasyConfig
+            dictitems:
+              feature_type: dp_fj
+              reduction: max
+          blocks:
+          - 1
+          - 1
+          - 1
+          - 1
+          - 1
+          - 1
+          conv_args: !!python/object/new:openpoints.utils.config.EasyConfig
+            dictitems:
+              order: conv-norm-act
+          expansion: 4
+          group_args: !!python/object/new:openpoints.utils.config.EasyConfig
+            dictitems:
+              NAME: ballquery
+              normalize_dp: true
+          in_channels: 3
+          norm_args: !!python/object/new:openpoints.utils.config.EasyConfig
+            dictitems:
+              norm: bn
+          nsample: 32
+          radius: 0.15
+          radius_scaling: 1.5
+          sa_layers: 2
+          sa_use_res: true
+          strides:
+          - 1
+          - 2
+          - 2
+          - 2
+          - 2
+          - 1
+          width: 32
+  mp: false
+  multiprocessing_distributed: false
+  ngpus_per_node: 1
+  opts: ''
+  pretrained_path: null
+  print_freq: 50
+  rank: 0
+  resume: false
+  root_dir: log/modelnet40ply2048
+  run_dir: log/modelnet40ply2048/modelnet40ply2048-train-pointnext-s-ngpus1-seed5334-20230923-150539-i4Hg4XZVmRnmjUAsiYXKkH
+  run_name: modelnet40ply2048-train-pointnext-s-ngpus1-seed5334-20230923-150539-i4Hg4XZVmRnmjUAsiYXKkH
+  save_freq: -1
+  sched_on_epoch: true
+  seed: 5334
+  start_epoch: 1
+  step_per_update: 1
+  sync_bn: false
+  task_name: modelnet40ply2048
+  test: false
+  use_amp: false
+  use_gpu: true
+  use_mask: false
+  use_voting: false
+  val_fn: validate
+  val_freq: 10
+  wandb: !!python/object/new:openpoints.utils.config.EasyConfig
+    dictitems:
+      tags:
+      - modelnet40ply2048
+      - train
+      - pointnext-s
+      - ngpus1
+      - seed5334
+      use_wandb: false
+  world_size: 1

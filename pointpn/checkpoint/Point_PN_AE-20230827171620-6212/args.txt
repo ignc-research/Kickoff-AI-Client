@@ -1,0 +1,13 @@
+ckpt_dir:	 ./checkpoint/Point_PN_AE-20230827171620-6212
+msg:	 None
+batch_size:	 32
+model:	 Point_PN_AE
+file_path:	 /home/liao/ignc/Point-NN/data
+epoch:	 300
+input_num:	 2048
+learning_rate:	 0.1
+weight_decay:	 0.0002
+seed:	 6212
+workers:	 8
+optim:	 sgd
+eps:	 0.4

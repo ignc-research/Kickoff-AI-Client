@@ -1,0 +1,10 @@
+# ninja log v5
+2	12879	1689904671498216072	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/sampling.o	ccf33d2bf0486089
+0	12976	1689904671598215253	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/ball_query.o	77f37e1d9a76d5ba
+2	13018	1689904671638214926	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/interpolate.o	2bb9ca41adafa0e4
+1	14092	1689904672710206143	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/bindings.o	af00fe29e40f6f52
+1	14494	1689904673114202833	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/group_points.o	e07bf8dea95b674b
+0	30000	1689904688602076015	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/ball_query_gpu.o	a6a0476b8ec0ef13
+1	30030	1689904688638075720	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/group_points_gpu.o	793b24fa9116de9d
+2	30388	1689904688994072807	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/interpolate_gpu.o	61a7d75332fca613
+2	32387	1689904690994056440	/data/tfj/workspace/python_projects/jianzhi/Point-NN/pointnet2_ops_lib/build/temp.linux-x86_64-3.9/pointnet2_ops/_ext-src/src/sampling_gpu.o	30f6cf5ed416b641
