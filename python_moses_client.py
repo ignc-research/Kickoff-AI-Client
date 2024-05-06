@@ -85,16 +85,54 @@ if __name__ == "__main__":
     while True:
         sender,target,task_number,service_number,data=receive_moses_message(con_socket)
         t1 = Thread(target=recycle, args=(con_socket, sender, target, service_number, task_number,freuquency))
-        if service_number==1:
+        if service_number==61:
+            send_moses_message(con_socket,sender,target,service_number,task_number,'Pose Estimation')
+            t1.start()
+            matching(os.path.join(ROOT,xml_dir),data.rstrip(),model,service_number,auto_del=auto_del)
+            send_moses_message(con_socket,target,sender,service_number,task_number,'finished')
+
+        elif service_number==62:
             send_moses_message(con_socket,sender,target,service_number,task_number,'training model '+str(model))
             t1.start()
             matching(os.path.join(ROOT,xml_dir),data.rstrip(),model,service_number,auto_del=auto_del)
             send_moses_message(con_socket,target,sender,service_number,task_number,'finished')
-        elif service_number==2:
+
+        elif service_number==63:
             send_moses_message(con_socket, sender, target, service_number, task_number, 'Find similar slices using model ' + str(model))
             t1.start()
             matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
             send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
+
+        elif service_number==64:
+            send_moses_message(con_socket, sender, target, service_number, task_number, 'Training Pose Estimation')
+            t1.start()
+            matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
+            send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
+
+        elif service_number==71:
+            send_moses_message(con_socket, sender, target, service_number, task_number, 'PCD for trainingn')
+            t1.start()
+            matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
+            send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
+
+        elif service_number==72:
+            send_moses_message(con_socket, sender, target, service_number, task_number, 'OBJ for training')
+            t1.start()
+            matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
+            send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
+
+        elif service_number==73:
+            send_moses_message(con_socket, sender, target, service_number, task_number, 'Detect Function')
+            t1.start()
+            matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
+            send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
+
+        elif service_number==74:
+            send_moses_message(con_socket, sender, target, service_number, task_number, 'Visualization')
+            t1.start()
+            matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
+            send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
+
         t1.join()
             # if len(result)==1:
             #     send_moses_message(con_socket,target,sender,123,task_number,'Keine ähnliche Schweißpositionen gefunden')
