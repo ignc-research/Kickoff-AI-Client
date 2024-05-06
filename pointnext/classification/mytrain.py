@@ -59,9 +59,9 @@ def main(gpu, cfg, profile=False):
         if cfg.sched_on_epoch:
             scheduler.step(epoch)
 
-        if (epoch%5 == 0):
+        if (epoch == cfg.epochs):
             print('Save model...')
-            savepath = os.path.join(BASE_2,'sim_checkpoint/model_{}.pth'.format(epoch))
+            savepath = os.path.join(BASE_2,'sim_checkpoint/best_model.pth')
             state = {
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),

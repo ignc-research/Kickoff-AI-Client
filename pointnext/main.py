@@ -14,7 +14,7 @@ BASE_1 = os.path.dirname(CURRENT_PATH)
 ROOT = os.path.dirname(BASE_1)
 
 bs = 1
-checkpoint_dir = os.path.join(BASE_1,'sim_checkpoint/model_80.pth')
+checkpoint_dir = os.path.join(BASE_1, 'sim_checkpoint/best_model.pth')
 
 parser = argparse.ArgumentParser('S3DIS scene segmentation training')
 parser.add_argument('--cfg', type=str, default=os.path.join(BASE_1,'cfgs/modelnet40ply2048/pointnext-s.yaml'), help='config file')

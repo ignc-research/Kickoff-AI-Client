@@ -103,6 +103,7 @@ class PointCloudDataset(Dataset):
         weld_position = torch.tensor(item['weld_position'], dtype=torch.float32)
         rotation_matrix = torch.tensor(item['rotation_matrix'], dtype=torch.float32)
         torch_name = item['torch_name']
+        # torch_name = 'MRW510_10GH'
         pcd = o3d.io.read_point_cloud(point_cloud_file_name)
 
         torch_pcd = read_obj(os.path.join(torch_dir, torch_name + '.obj'))
@@ -149,8 +150,8 @@ def training(dataset_path):
             if i % 1000 == 0:
                 print(f"Epoch [{epoch + 1}/{epochs}], Step [{i + 1}/{len(dataset)}], Loss: {loss.item()}")
 
-        if (epoch%5 == 0):
-            savepath = os.path.join(checkpoints_dir,'model_{}.pth'.format(epoch))#str(checkpoints_dir) + 'model_{}.pth'.format(epoch)
+        if (epoch == epochs):
+            savepath = os.path.join(checkpoints_dir,'best_model.pth')#str(checkpoints_dir) + 'model_{}.pth'.format(epoch)
             state = {
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),

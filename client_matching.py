@@ -64,13 +64,13 @@ def matching(data_folder,xml_file,model,dienst_number,save_image=False,auto_del=
         if dienst_number == 62:
             if model == 'pointnet2':
                 print('training pointnet2')
-                os.system('python pointnet2/train_siamese_fortools.py --file_path data/training_similary')
+                os.system('python pointnet2/train_siamese_fortools.py --file_path data/training_similarity')
                 print("pointnet2 training finished")
                 return
 
             elif model == 'pointnext':
                 print('training pointnext')
-                os.system('python pointnext/classification/main.py --file_path data/training_similary')
+                os.system('python pointnext/classification/main.py --file_path data/training_similarity')
                 print("pointnext training finished")
                 return
         elif dienst_number == 64:
@@ -197,8 +197,8 @@ def matching(data_folder,xml_file,model,dienst_number,save_image=False,auto_del=
         if auto_del:
             shutil.rmtree(wz_path)
         #
-        print('gt_map',gt_id_map)
-        print('retrieved_map',retrieved_map)
+        # print('gt_map',gt_id_map)
+        # print('retrieved_map',retrieved_map)
         #
         # metric=mean_metric(gt_id_map,retrieved_map)
         # print('metric',metric)
@@ -211,9 +211,9 @@ def matching(data_folder,xml_file,model,dienst_number,save_image=False,auto_del=
 
 if __name__ == "__main__":
 
-    data_folder=os.path.join(ROOT,'data/obj_data')
+    data_folder=os.path.join(ROOT,'data/training_pe')
     xml='Reisch.xml'
-    model='pointnext'
-    dienst_number=74 ## 62 training_similarity;63 similarity; 61 pose estimation; 64 training_PE
+    model='pointnet2'
+    dienst_number=63 ## 61 pose estimation; 62 training_similarity;63 similarity;  64 training_PE
     matching(data_folder, xml, model,dienst_number,save_image=False,auto_del=False)
 

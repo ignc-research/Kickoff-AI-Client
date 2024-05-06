@@ -171,7 +171,7 @@ def poseestimation(data_path,wz_path,xml_path,SNahts,tree,map,vis=False):
     # device = torch.device('cuda:1')
     model = PointCloudNet().cuda()
     # model = model.to(device)
-    model.load_state_dict(torch.load(os.path.join(CURRENT_PATH, 'checkpoints/model_80.pth')))
+    model.load_state_dict(torch.load(os.path.join(CURRENT_PATH, 'checkpoints/best_model.pth')))
     # model=model.to(device)
     true_matrices = []
     predicted_matrices = []
@@ -187,7 +187,7 @@ def poseestimation(data_path,wz_path,xml_path,SNahts,tree,map,vis=False):
             pcd.paint_uniform_color([1,0,0])
             point_cloud = torch.tensor(pcd.points, dtype=torch.float32).cuda()
             torch_name=weld_infos[weld_infos[:,0]==key][0,2]
-            # torch_name='MRW510_10GH'
+            torch_name='MRW510_10GH'
             welding_gun_pcd = read_obj(os.path.join(data_path, 'torch', torch_name + '.obj'))
             welding_gun_pcd = torch.tensor(welding_gun_pcd, dtype=torch.float32).cuda()
             weld_info=weld_infos[weld_infos[:,0]==key][:,3:].astype(float)

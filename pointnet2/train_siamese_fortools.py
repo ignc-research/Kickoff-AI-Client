@@ -189,9 +189,9 @@ def main(args):
             logger.info('epoch {}/{}, batch {}/{}, kind of sample pairs:{}, loss: {:.10f}'.format(epoch,args.epoch,i,len(trainDataLoader),msg[0],loss.item()))
 
 
-        if (epoch%5 == 0):
+        if (epoch == args.epoch):
             logger.info('Save model...')
-            savepath = os.path.join(checkpoints_dir,'model_{}.pth'.format(epoch))#str(checkpoints_dir) + 'model_{}.pth'.format(epoch)
+            savepath = os.path.join(checkpoints_dir,'best_model.pth')#str(checkpoints_dir) + 'model_{}.pth'.format(epoch)
             log_string('Saving at %s' % savepath)
             state = {
                 'epoch': epoch,
