@@ -31,7 +31,7 @@ pip install torch-scatter -f https://data.pyg.org/whl/torch-1.13.1+cu117.html
 conda install -c anaconda h5py
 
 pip install -r requirements.txt
-install cpp extensions, the pointnet++ library
+# install cpp extensions, the pointnet++ library
 cd pointpn/pointnet2_ops_lib
 python setup.py install
 cd ../../
