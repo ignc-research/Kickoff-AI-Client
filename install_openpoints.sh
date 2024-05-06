@@ -15,6 +15,7 @@
 
 # download openpoints
 # git clone git@github.com:guochengqian/openpoints.git
+git clone git@github.com:HAIYANGYU1/openpoints.git
 git submodule update --init
 # install PyTorch
 conda deactivate

@@ -120,7 +120,7 @@ def main(args):
 
     try:
         checkpoint = torch.load('./pointnet2/checkpoints/best_model.pth')
-        start_epoch = checkpoint['epoch']
+        start_epoch = 0
         siamese_model.load_state_dict(checkpoint['model_state_dict'])
         log_string('Use pretrain model')
     except:
