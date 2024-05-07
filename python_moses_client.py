@@ -64,8 +64,8 @@ def receive_moses_message(con_socket):
         print("-------------------------")
         return response_sender,response_target,response_task_number,response_service_number, response_data
 
-def recycle(con_socket, client_name, server_name, service_number, task_number,freuquency,flag):
-    while flag:
+def recycle(con_socket, client_name, server_name, service_number, task_number,freuquency):
+    while True:
         send_moses_message(con_socket, client_name, server_name, service_number, task_number, 'running')
         time.sleep(freuquency)
     return
@@ -84,9 +84,8 @@ if __name__ == "__main__":
     send_moses_message(con_socket,"KI_Client", "MOSES_Cl1", 123, 60, 'Verbunden')
     star_time=time.time()
     while True:
-        flag=True
         sender,target,task_number,service_number,data=receive_moses_message(con_socket)
-        t1 = Thread(target=recycle, args=(con_socket, sender, target, service_number, task_number,freuquency,flag))
+        t1 = Thread(target=recycle, args=(con_socket, sender, target, service_number, task_number,freuquency))
         if service_number==61:
             send_moses_message(con_socket,sender,target,service_number,task_number,'Pose Estimation')
             t1.start()
@@ -136,7 +135,7 @@ if __name__ == "__main__":
             matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
             send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
 
-        flag=False
+        t1.join()
             # if len(result)==1:
             #     send_moses_message(con_socket,target,sender,123,task_number,'Keine ähnliche Schweißpositionen gefunden')
             # else:
