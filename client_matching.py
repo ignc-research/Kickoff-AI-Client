@@ -211,10 +211,11 @@ def matching(data_folder,xml_file,model,dienst_number,save_image=False,auto_del=
 
 if __name__ == "__main__":
 
-    data_folder=os.path.join(ROOT,'data')
+    data_folder=os.path.join(ROOT,'data/seam_data')
     xml='Reisch.xml'
     model='pointnet2'
-    dienst_number=63 
-    ## 61 pose estimation; 62 training_similarity;63 similarity;  64 training_PE; 71 pcd for training; 72 obj for training; 73 detect function; 74 visual;
+    dienst_number= 71 
+    # 61 pose estimation; 62 training_similarity;63 similarity;  64 training_PE; 
+    # 71 pcd for training; 72 obj for training; 73 detect function; 74 visualization;
     matching(data_folder, xml, model,dienst_number,save_image=False,auto_del=False)
 

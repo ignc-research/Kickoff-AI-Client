@@ -53,3 +53,12 @@
 1	30833	1714924194515612685	/home/meer/桌面/present/welding_client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/group_points_gpu.o	4ecf441c6f377b3e
 1	31243	1714924194927616725	/home/meer/桌面/present/welding_client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/interpolate_gpu.o	b99ccfeb3e379910
 1	31772	1714924195455621910	/home/meer/桌面/present/welding_client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/sampling_gpu.o	f044d7762719b387
+1	20393	1715114712811740727	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/ball_query.o	ac6696488f5dd49b
+1	20415	1715114712839740939	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/interpolate.o	6bf4b0123b88dafb
+1	20551	1715114712971741934	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/sampling.o	d924d8c2b606b8cc
+0	20793	1715114713215743767	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/bindings.o	4245c67d4a3657a2
+0	20974	1715114713403745179	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/group_points.o	24f4b7484cce18cd
+2	33321	1715114725755835620	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/interpolate_gpu.o	b9e8587aec510c62
+2	33428	1715114725859836363	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/group_points_gpu.o	7950608ea31fd1e1
+3	33598	1715114726031837590	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/ball_query_gpu.o	924e486c8a425c64
+1	34459	1715114726895843734	/home/meer/桌面/present/Kickoff-AI-Client/pointpn/pointnet2_ops_lib/build/temp.linux-x86_64-3.7/pointnet2_ops/_ext-src/src/sampling_gpu.o	1ad0c3a3b741e217
