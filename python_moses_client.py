@@ -64,7 +64,7 @@ def receive_moses_message(con_socket):
         print("-------------------------")
         return response_sender,response_target,response_task_number,response_service_number, response_data
 
-def recycle(con_socket, client_name, server_name, service_number, task_number,freuquency):
+def recycle(con_socket, client_name, server_name, service_number, task_number,freuquency,flag):
     while flag:
         send_moses_message(con_socket, client_name, server_name, service_number, task_number, 'running')
         time.sleep(freuquency)
