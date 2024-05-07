@@ -70,6 +70,27 @@ def recycle(con_socket, client_name, server_name, service_number, task_number,fr
         time.sleep(freuquency)
     return
 
+class MyThread(threading.Thread):
+    def __init__(self,con_socket, client_name, server_name, service_number, task_number,freuquency):
+        super().__init__()
+        self.flag = True
+        self.con_socket=con_socket
+        self.client_name=client_name
+        self.server_name=server_name
+        self.service_number=service_number
+        self.task_number=task_number
+        self.frequency=freuquency
+
+    def run(self):
+        while self.flag:
+            send_moses_message(self.con_socket, self.client_name, self.server_name, self.service_number, self.task_number, 'running')
+            time.sleep(self.freuquency)
+
+    def stop(self):
+        self.flag = False
+
+
+
 
 if __name__ == "__main__":
     config = configparser.ConfigParser()
@@ -85,7 +106,8 @@ if __name__ == "__main__":
     star_time=time.time()
     while True:
         sender,target,task_number,service_number,data=receive_moses_message(con_socket)
-        t1 = Thread(target=recycle, args=(con_socket, sender, target, service_number, task_number,freuquency))
+        # t1 = Thread(target=recycle, args=(con_socket, sender, target, service_number, task_number,freuquency))
+        t1 = MyThread(con_socket, sender, target, service_number, task_number,freuquency)
         if service_number==61:
             send_moses_message(con_socket,sender,target,service_number,task_number,'Pose Estimation')
             t1.start()
@@ -135,6 +157,7 @@ if __name__ == "__main__":
             matching(os.path.join(ROOT, xml_dir), data.rstrip(), model, service_number,auto_del=auto_del)
             send_moses_message(con_socket, target, sender, service_number, task_number, 'finished')
 
+        t1.stop()
         t1.join()
             # if len(result)==1:
             #     send_moses_message(con_socket,target,sender,123,task_number,'Keine ähnliche Schweißpositionen gefunden')
