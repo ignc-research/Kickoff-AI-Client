@@ -64,14 +64,14 @@ def receive_moses_message(con_socket):
         print("-------------------------")
         return response_sender,response_target,response_task_number,response_service_number, response_data
 
-def recycle(con_socket, client_name, server_name, service_number, task_number,freuquency):
+def recycle(con_socket, client_name, server_name, service_number, task_number,frequency):
     while True:
         send_moses_message(con_socket, client_name, server_name, service_number, task_number, 'running')
-        time.sleep(freuquency)
+        time.sleep(frequency)
     return
 
 class MyThread(threading.Thread):
-    def __init__(self,con_socket, client_name, server_name, service_number, task_number,freuquency):
+    def __init__(self,con_socket, client_name, server_name, service_number, task_number,frequency):
         super().__init__()
         self.flag = True
         self.con_socket=con_socket
@@ -79,12 +79,12 @@ class MyThread(threading.Thread):
         self.server_name=server_name
         self.service_number=service_number
         self.task_number=task_number
-        self.frequency=freuquency
+        self.frequency=frequency
 
     def run(self):
         while self.flag:
             send_moses_message(self.con_socket, self.client_name, self.server_name, self.service_number, self.task_number, 'running')
-            time.sleep(self.freuquency)
+            time.sleep(self.frequency)
 
     def stop(self):
         self.flag = False
@@ -100,14 +100,14 @@ if __name__ == "__main__":
     xml_dir=config.get('config','xml_dir')
     auto_del=config.get('config','auto_del')
     model = config.get('config','model')
-    freuquency=int(config.get('config','frequency'))
+    frequency=int(config.get('config','frequency'))
     con_socket = connect_moses_socket(host, port)
     send_moses_message(con_socket,"KI_Client", "MOSES_Cl1", 123, 60, 'Verbunden')
     star_time=time.time()
     while True:
         sender,target,task_number,service_number,data=receive_moses_message(con_socket)
         # t1 = Thread(target=recycle, args=(con_socket, sender, target, service_number, task_number,freuquency))
-        t1 = MyThread(con_socket, sender, target, service_number, task_number,freuquency)
+        t1 = MyThread(con_socket, sender, target, service_number, task_number,frequency)
         if service_number==61:
             send_moses_message(con_socket,sender,target,service_number,task_number,'Pose Estimation')
             t1.start()
